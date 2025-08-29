@@ -45,8 +45,8 @@ const corsOptions = {
     'https://capstone-voting.vercel.app/*',
     'https://sscelection2025.vercel.app',
     'https://sscelection2025.vercel.app/*',
-    'https://cincovotingdeployment.vercel.app',
-    'https://cincovotingdeployment.vercel.app/*',
+    'https://cinco-votingdeployment.vercel.app',
+    'https://cinco-votingdeployment.vercel.app/*',
     'https://*.vercel.app',
     'https://*.vercel.app/*'
     
@@ -65,7 +65,7 @@ app.use((req, res, next) => {
   const allowedOrigins = [
     'https://capstone-voting.vercel.app',
     'https://sscelection2025.vercel.app',
-    'https://cincovotingdeployment.vercel.app'
+    'https://cinco-votingdeployment.vercel.app'
   ];
   
   const origin = req.headers.origin;
