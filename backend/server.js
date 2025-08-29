@@ -72,7 +72,7 @@ app.use((req, res, next) => {
   const allowedOrigins = [
     'https://capstone-voting.vercel.app',
     'https://sscelection2025.vercel.app',
-    'https://cinco-votingdeployment.vercel.app/',
+    'https://cinco-votingdeployment.vercel.app',
     'https://tampos-votingdeployment.vercel.app',
     'https://hermosa-votingdeployment.vercel.app',
     'https://epe-votingdeployment.vercel.app',
