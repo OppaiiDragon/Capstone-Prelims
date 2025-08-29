@@ -46,7 +46,8 @@ const corsOptions = {
     'https://sscelection2025.vercel.app',
     'https://sscelection2025.vercel.app/*',
     'https://*.vercel.app',
-    'https://*.vercel.app/*'
+    'https://*.vercel.app/*',
+    'https://*capstone-voting-nine.vercel.app/*'
   ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
