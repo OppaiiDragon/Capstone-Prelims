@@ -63,7 +63,7 @@ app.use((req, res, next) => {
   const allowedOrigins = [
     'https://capstone-voting.vercel.app',
     'https://sscelection2025.vercel.app',
-    'https://CincoVotingDeployment.vercel.app'
+    'https://cincovotingdeployment.vercel.app'
   ];
   
   const origin = req.headers.origin;
