@@ -50,7 +50,7 @@ const config = {
 
   // CORS Configuration
   cors: {
-    origin: process.env.CORS_ORIGIN || 'http://localhost:5173',
+    origin: process.env.CORS_ORIGIN || 'https://capstone-voting-9xbq.vercel.app',
     credentials: process.env.CORS_CREDENTIALS === 'true'
   },
 
@@ -89,7 +89,7 @@ const config = {
 
   // Frontend URL
   frontend: {
-    url: process.env.FRONTEND_URL || 'http://localhost:5173'
+    url: process.env.FRONTEND_URL || 'https://capstone-voting-9xbq.vercel.app'
   },
 
   // Production Configuration
