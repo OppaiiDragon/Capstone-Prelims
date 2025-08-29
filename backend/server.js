@@ -62,7 +62,8 @@ app.use((req, res, next) => {
   // Allow both old and new domains
   const allowedOrigins = [
     'https://capstone-voting.vercel.app',
-    'https://sscelection2025.vercel.app'
+    'https://sscelection2025.vercel.app',
+    'https://CincoVotingDeployment.vercel.app'
   ];
   
   const origin = req.headers.origin;
