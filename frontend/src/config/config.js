@@ -2,7 +2,7 @@
 const config = {
   // API Configuration
   api: {
-    baseUrl: import.meta.env.VITE_API_BASE_URL || 'https://backend-production-219d.up.railway.app/api',
+    baseUrl: import.meta.env.VITE_API_BASE_URL || 'https://capstone-voting-production-fd29.up.railway.app/api',
     version: import.meta.env.VITE_API_VERSION || 'v1',
     timeout: parseInt(import.meta.env.VITE_API_TIMEOUT) || 10000
   },
