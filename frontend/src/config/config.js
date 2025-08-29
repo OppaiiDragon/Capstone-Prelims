@@ -95,8 +95,8 @@ const config = {
 
   // Production Configuration
   production: {
-    apiUrl: import.meta.env.VITE_PROD_API_URL || 'https://your-api-domain.com/api',
-    frontendUrl: import.meta.env.VITE_PROD_FRONTEND_URL || 'https://your-frontend-domain.com'
+    apiUrl: import.meta.env.VITE_PROD_API_URL || 'capstone-voting-production-fd29.up.railway.app',
+    frontendUrl: import.meta.env.VITE_PROD_FRONTEND_URL || 'capstone-voting-9xbq-5jhlz87z5.vercel.app'
   },
 
   // Build Configuration
