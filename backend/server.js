@@ -35,19 +35,31 @@ const PORT = process.env.PORT || 3000;
 const IS_TEST = false;
 
 const app = express();
-
 // Enhanced CORS configuration
+// Centralize allowed origins so both `cors()` and the custom middleware below use the same list/patterns
+const allowedOriginsList = [
+  'http://localhost:5173',
+  'http://localhost:4173',
+  'https://capstone-voting.vercel.app',
+  'https://sscelection2025.vercel.app',
+  'https://hermosa-capstone-voting-tonj.vercel.app'
+];
+
 const corsOptions = {
-  origin: [
-    'http://localhost:5173',
-    'http://localhost:4173',
-    'https://capstone-voting.vercel.app',
-    'https://capstone-voting.vercel.app/*',
-    'https://sscelection2025.vercel.app',
-    'https://sscelection2025.vercel.app/*',
-    'https://*.vercel.app',
-    'https://*.vercel.app/*'
-  ],
+  // Use a function to allow exact matches from the list, plus any vercel.app subdomain
+  origin: (origin, callback) => {
+    // Allow server-to-server or non-browser requests (no Origin header)
+    if (!origin) return callback(null, true);
+
+    const isAllowedExplicit = allowedOriginsList.includes(origin);
+    const isVercelSubdomain = /https:\/\/[A-Za-z0-9-]+\.vercel\.app(:\d+)?$/.test(origin);
+
+    if (isAllowedExplicit || isVercelSubdomain) {
+      return callback(null, true);
+    }
+
+    return callback(new Error('CORS policy: Origin not allowed'));
+  },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
@@ -58,16 +70,14 @@ app.use(cors(corsOptions));
 
 // Additional CORS headers for all routes
 app.use((req, res, next) => {
-  // Allow both old and new domains
-  const allowedOrigins = [
-    'https://capstone-voting.vercel.app',
-    'https://sscelection2025.vercel.app',
-    'https://hermosa-capstone-voting-tonj.vercel.app'
-  ];
-  
+  // Reuse the allowedOriginsList and accept vercel subdomains
   const origin = req.headers.origin;
-  if (allowedOrigins.includes(origin)) {
-    res.header('Access-Control-Allow-Origin', origin);
+  if (origin) {
+    const isAllowedExplicit = allowedOriginsList.includes(origin);
+    const isVercelSubdomain = /https:\/\/[A-Za-z0-9-]+\.vercel\.app(:\d+)?$/.test(origin);
+    if (isAllowedExplicit || isVercelSubdomain) {
+      res.header('Access-Control-Allow-Origin', origin);
+    }
   }
   
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
