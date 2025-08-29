@@ -45,6 +45,16 @@ const corsOptions = {
     'https://capstone-voting.vercel.app/*',
     'https://sscelection2025.vercel.app',
     'https://sscelection2025.vercel.app/*',
+    'https://cinco-votingdeployment.vercel.app',
+    'https://cinco-votingdeployment.vercel.app/*',
+    'https://tampos-votingdeployment.vercel.app',
+    'https://tampos-votingdeployment.vercel.app/*',
+    'https://hermosa-votingdeployment.vercel.app',
+    'https://hermosa-votingdeployment.vercel.app/*',
+    'https://epe-votingdeployment.vercel.app',
+    'https://epe-votingdeployment.vercel.app/*',
+    'https://didal-votingdeployment.vercel.app',
+    'https://didal-votingdeployment.vercel.app/*',
     'https://*.vercel.app',
     'https://*.vercel.app/*'
   ],
@@ -61,7 +71,12 @@ app.use((req, res, next) => {
   // Allow both old and new domains
   const allowedOrigins = [
     'https://capstone-voting.vercel.app',
-    'https://sscelection2025.vercel.app'
+    'https://sscelection2025.vercel.app',
+    'https://cinco-votingdeployment.vercel.app/',
+    'https://tampos-votingdeployment.vercel.app',
+    'https://hermosa-votingdeployment.vercel.app',
+    'https://epe-votingdeployment.vercel.app',
+    'https://didal-votingdeployment.vercel.app',
   ];
   
   const origin = req.headers.origin;
