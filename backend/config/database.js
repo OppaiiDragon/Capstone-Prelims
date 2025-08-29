@@ -326,13 +326,86 @@ async function insertDefaultData(verbose = true) {
   const db = createConnection();
   
   try {
-    // Import and run clean default seed data
-    const { seedWithCleanData } = await import('../scripts/clean-seed-data.js');
-    await seedWithCleanData(db, verbose);
+    if (verbose) {
+      console.log('🌱 Inserting default data...');
+    }
+    
+    // Create superadmin account
+    await createSuperAdmin(db, verbose);
+    
+    // Import and run clean default seed data if it exists
+    try {
+      const { seedWithCleanData } = await import('../scripts/clean-seed-data.js');
+      await seedWithCleanData(db, verbose);
+    } catch (error) {
+      if (verbose) {
+        console.log('⚠️  clean-seed-data.js not found, skipping additional seeding');
+      }
+    }
     
     db.end();
   } catch (error) {
     db.end();
+    throw error;
+  }
+}
+
+// Create superadmin account
+async function createSuperAdmin(db, verbose = true) {
+  try {
+    // Check if superadmin creation is disabled
+    if (process.env.DISABLE_SUPERADMIN_CREATION === 'true') {
+      if (verbose) {
+        console.log('⚠️  SuperAdmin creation disabled by environment variable');
+      }
+      return;
+    }
+    
+    if (verbose) {
+      console.log('👑 Creating/updating superadmin account...');
+    }
+    
+    // Hash the superadmin password
+    const bcrypt = await import('bcryptjs');
+    const superadminPassword = await bcrypt.hash('superadmin123', 10);
+    
+    // Insert or update superadmin
+    await new Promise((resolve, reject) => {
+      db.query(
+        `INSERT INTO admins (id, username, email, password, role) VALUES (?, ?, ?, ?, ?) 
+         ON DUPLICATE KEY UPDATE role = ?, password = ?`,
+        [
+          'superadmin-001', 
+          'CapstoneTeam', 
+          'superadmin@votingsystem.com', 
+          superadminPassword, 
+          'superadmin', 
+          'superadmin', 
+          superadminPassword
+        ],
+        (err, result) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(result);
+          }
+        }
+      );
+    });
+    
+    if (verbose) {
+      console.log('✅ SuperAdmin account created/updated successfully!');
+      console.log('   - Username: CapstoneTeam');
+      console.log('   - Email: superadmin@votingsystem.com');
+      console.log('   - Password: superadmin123');
+      console.log('   - Role: superadmin');
+      console.log('   - ID: superadmin-001');
+    }
+    
+  } catch (error) {
+    if (verbose) {
+      console.error('❌ SuperAdmin creation failed:', error.message);
+    }
     throw error;
   }
 }
